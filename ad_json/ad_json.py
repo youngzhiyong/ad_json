@@ -56,6 +56,18 @@ class AdJson(object):
     def __delitem__(self, key):
         del self._container[key]
     
+    def __iter__(self):
+        return iter(self._container)
+
+    def __next__(self):
+        return next(self._container)
+
+    def items(self):
+        return self._container.items()
+    
+    def values(self):
+        return self._container.values()
+    
     def to_dict(self):
         result = {}
         for key, value in self._container.items():

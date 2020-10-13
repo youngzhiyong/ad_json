@@ -284,6 +284,29 @@ class AdJsonTest(unittest.TestCase):
 
         expect = {0: {"a": 10}}
         self.assert_ad_json_equal(ad_json, expect)
+    
+    def test_items(self):
+        origin = {'a': {'a': 0}, 'b': {}, 'c': 2}
+        ad_json = AdJson(origin)
+
+        def walk(root, expect):
+            if isinstance(root, (list, tuple)):
+                for exp, value in zip(expect, root):
+                    if isinstance(value, AdJson):
+                        walk(value, exp)
+                        continue
+
+                    self.assertEqual(value, exp)
+                return
+            
+            for key, value in root.items():
+                if isinstance(value, (AdJson, list, tuple)):
+                    walk(value, expect[key])
+                    continue
+                self.assertEqual(value, expect[key])
+        
+        walk(ad_json, origin)
+
 
 if __name__ == "__main__":
     unittest.main()
