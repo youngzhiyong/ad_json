@@ -127,7 +127,7 @@ class AdJson(object):
         
         key = self.__dict__.pop(AdJson._KEY, None)
         parent = self.__dict__.pop(AdJson._PARENT, None)
-        if not key or not parent:
+        if key is None or parent is None:
             return
 
         parent[key] = self

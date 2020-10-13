@@ -277,7 +277,13 @@ class AdJsonTest(unittest.TestCase):
         target.loads(dumps_result)
 
         self.assert_ad_json_equal(origin, target)
+    
+    def test_zero_key(self):
+        ad_json = AdJson()
+        ad_json[0].a = 10
 
+        expect = {0: {"a": 10}}
+        self.assert_ad_json_equal(ad_json, expect)
 
 if __name__ == "__main__":
     unittest.main()
